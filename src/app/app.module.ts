@@ -5,12 +5,16 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { PokemonService } from './shared/services/pokemon.service';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { StatsComponent } from './stats/stats.component';
 import { MovesComponent } from './moves/moves.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
+import { ImagifyPipe } from './shared/pipes/imagify.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,8 @@ import { PokemonComponent } from './pokemon/pokemon.component';
     StatsComponent,
     MovesComponent,
     AbilitiesComponent,
-    PokemonComponent
+    PokemonComponent,
+    ImagifyPipe
   ],
   imports: [
     NgbModule.forRoot(),
@@ -28,7 +33,7 @@ import { PokemonComponent } from './pokemon/pokemon.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [PokemonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
