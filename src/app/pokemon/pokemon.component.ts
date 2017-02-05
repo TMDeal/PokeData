@@ -22,8 +22,7 @@ export class PokemonComponent implements OnInit {
     this.pokemonService.getPage(this.pageSize)
       .subscribe(
         page => this.page = page,
-        error => this.errorMsg = <any>error,
-        () => console.log('Pokemon page retrived')
+        error => this.errorMsg = <any>error
       );
   }
 }
