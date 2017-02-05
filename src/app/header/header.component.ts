@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,12 +6,25 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() brand: string = "App";
-  isCollapsed: boolean = true;
+  @Input() brand = 'App';
+  isCollapsed = true;
 
-  constructor() { }
+  constructor(private zone: NgZone) { }
 
   ngOnInit() {
+    const mql: MediaQueryList = window.matchMedia('(min-width: 992px)');
+    mql.addListener((mq: MediaQueryList) => {
+      this.zone.run(() => {
+        this.close();
+      });
+    });
   }
 
+  toggleNav() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+
+  close() {
+    this.isCollapsed = true;
+  }
 }
