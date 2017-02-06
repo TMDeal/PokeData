@@ -5,6 +5,7 @@ import { StatsComponent } from './stats/stats.component';
 import { MovesComponent } from './moves/moves.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
+import { PokemonDetailComponent } from './pokemon/pokemon-detail/pokemon-detail.component';
 
 const routes: Routes = [
   {
@@ -12,8 +13,14 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        redirectTo: 'pokemon',
+        pathMatch:  'full'
+      },
+      {
+        path: 'pokemon',
         children: [
-          { path: '', component:  PokemonComponent}
+          { path: '', component: PokemonComponent },
+          { path: ':id', component: PokemonDetailComponent }
         ]
       },
       {
