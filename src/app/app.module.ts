@@ -16,6 +16,7 @@ import { AbilitiesComponent } from './abilities/abilities.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
 import { ImagifyPipe } from './shared/pipes/imagify.pipe';
 import { PokemonDetailComponent } from './pokemon/pokemon-detail/pokemon-detail.component';
+import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PokemonDetailComponent } from './pokemon/pokemon-detail/pokemon-detail.
     AbilitiesComponent,
     PokemonComponent,
     ImagifyPipe,
-    PokemonDetailComponent
+    PokemonDetailComponent,
+    MapToIterablePipe
   ],
   imports: [
     NgbModule.forRoot(),
