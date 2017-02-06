@@ -15,6 +15,7 @@ import { MovesComponent } from './moves/moves.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
 import { ImagifyPipe } from './shared/pipes/imagify.pipe';
+import { PokemonDetailComponent } from './pokemon/pokemon-detail/pokemon-detail.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ImagifyPipe } from './shared/pipes/imagify.pipe';
     MovesComponent,
     AbilitiesComponent,
     PokemonComponent,
-    ImagifyPipe
+    ImagifyPipe,
+    PokemonDetailComponent
   ],
   imports: [
     NgbModule.forRoot(),
