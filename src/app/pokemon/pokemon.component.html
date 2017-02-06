@@ -1,14 +1,16 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 col-sm-6 col-md-4 col-lg-2 pt-1 pb-1" *ngFor="let pokemon of page?.contents">
-      <div class="card card-inverse pokeCard">
-        <img class="card-img-top p-md-2" src="{{pokemon.id | imagify}}" alt="{{pokemon.name}}"/>
-        <div style="background-color: #333; border-color: #333;" class="card-block">
-          <p class="card-text text-center">
-            <strong>{{pokemon.name}}</strong>
-          </p>
+    <div class="col-6 col-md-4 col-lg-2 pt-1 pb-1" *ngFor="let pokemon of page?.contents">
+      <a [routerLink]="['/pokemon', pokemon.id]">
+        <div class="card card-inverse">
+          <img class="img-fluid card-img-top p-md-2" src="{{pokemon.id | imagify}}" alt="{{pokemon.name}}"/>
+          <div style="background-color: #333; border-color: #333;" class="card-block">
+            <p class="card-text text-center">
+              <strong>{{pokemon.name}}</strong>
+            </p>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </div>

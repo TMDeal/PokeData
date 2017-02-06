@@ -1,13 +1,17 @@
-.pokeCard:hover {
-  color: black;
-  box-shadow: 1px 1px 1px 1px grey;
+a {
+  text-decoration: none;
 }
 
 img {
   width: 100%;
-  height: auto;
 }
 
 .card {
   border-color: grey;
 }
+
+.card:hover {
+  color: black;
+  box-shadow: 1px 1px 1px 1px grey;
+}
+
