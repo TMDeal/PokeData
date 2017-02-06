@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { ResourceList } from '../interfaces/pokeapi/common';
+import { Pokemon } from '../interfaces/pokeapi/pokemon';
+
 import { PokemonPage } from '../interfaces/pokemon-page';
 
 import * as _ from 'lodash';
@@ -30,14 +33,24 @@ export class PokemonService {
       .map((res: Response) => {
         const body = res.json();
         const page: PokemonPage = {
-          contents: body.results,
+          count: body.count,
           next: body.next,
-          previous: body.previous
+          previous: body.previous,
+          contents: body.results
         };
         _.each(page.contents, (value, index) => {
           value['id'] = (index + 1) + offset;
         });
         return page || {};
+      })
+      .catch(this.handleError);
+  }
+
+  getPokemon(id: number): Observable<Pokemon> {
+    return this.http.get(`${this.baseUrl}pokemon/${id}`)
+      .map((res: Response) => {
+        const body: Pokemon = res.json();
+        return body || {};
       })
       .catch(this.handleError);
   }
