@@ -20,32 +20,6 @@ export class PokemonService {
 
   constructor(private http: Http) { }
 
-  getPage(limit = this.maxPokemon, offset = 0): Observable<PokemonPage> {
-    const params: URLSearchParams = new URLSearchParams();
-    params.set('limit', String(limit));
-    params.set('offset', String(offset));
-
-    const options: RequestOptions = new RequestOptions({
-      search: params
-    });
-
-    return this.http.get(`${this.baseUrl}pokemon`, options)
-      .map((res: Response) => {
-        const body = res.json();
-        const page: PokemonPage = {
-          count: body.count,
-          next: body.next,
-          previous: body.previous,
-          contents: body.results
-        };
-        _.each(page.contents, (value, index) => {
-          value['id'] = (index + 1) + offset;
-        });
-        return page || {};
-      })
-      .catch(this.handleError);
-  }
-
   getPokemon(id: number): Observable<Pokemon> {
     return this.http.get(`${this.baseUrl}pokemon/${id}`)
       .map((res: Response) => {
