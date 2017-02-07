@@ -1,16 +1,36 @@
 <div class="container">
-  <div class="row">
-    <div class="col-6 col-md-4 col-lg-2 pt-1 pb-1" *ngFor="let pokemon of page?.contents">
-      <a [routerLink]="['/pokemon', pokemon.id]">
-        <div class="card card-inverse">
-          <img class="img-fluid card-img-top p-md-2" src="{{pokemon.id | imagify}}" alt="{{pokemon.name}}"/>
-          <div style="background-color: #333; border-color: #333;" class="card-block">
-            <p class="card-text text-center">
-              <strong>{{pokemon.name}}</strong>
-            </p>
-          </div>
+
+  <div *ngIf="page" class="content">
+
+    <div class="row">
+      <template ngFor let-pokemon [ngForOf]="page.contents">
+        <div *ngIf="pokemon.id <= page.collectionSize" class="col-6 col-md-4 col-lg-2 pt-1 pb-1">
+          <a [routerLink]="['/pokemon', pokemon.id]">
+            <div class="card card-inverse">
+              <img class="img-fluid card-img-top p-md-2" src="{{pokemon.id | imagify}}" alt="{{pokemon.name}}"/>
+              <div style="background-color: #333; border-color: #333;" class="card-block">
+                <p class="card-text text-center">
+                  <strong>{{pokemon.name}}</strong>
+                </p>
+              </div>
+            </div>
+          </a>
         </div>
-      </a>
+      </template>
     </div>
+
+    <div class="d-flex pt-3 justify-content-center">
+      <ngb-pagination
+        (pageChange)="goToPage($event)"
+        [collectionSize]="page.collectionSize"
+        [pageSize]="page.size"
+        [page]="page.current"
+        [maxSize]="maxSize"
+        [rotate]="true"
+        [boundaryLinks]="false">
+      </ngb-pagination>
+    </div>
+
   </div>
+
 </div>

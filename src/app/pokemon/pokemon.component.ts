@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { PokemonService } from '../shared/services/pokemon.service';
+import { Component, OnInit, HostListener } from '@angular/core';
+
+import { PageService } from '../shared/services/page.service';
 
 import { PokemonPage } from '../shared/interfaces/pokemon-page';
 
@@ -10,19 +11,35 @@ import { PokemonPage } from '../shared/interfaces/pokemon-page';
 })
 export class PokemonComponent implements OnInit {
   private page: PokemonPage;
-  private currentPage = 1;
-  private pageSize = 12;
-  private errorMsg: string;
-  private next: string;
-  private previous: string;
+  private maxSize: number;
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(
+    private pageService: PageService
+  ) { }
 
   ngOnInit() {
-    this.pokemonService.getPage(this.pageSize)
-      .subscribe(
-        page => this.page = page,
-        error => this.errorMsg = <any>error
-      );
+    this.setPagination();
+    this.pageService.getPage()
+      .subscribe(page => this.page = page);
+  }
+
+  goToPage(pageNumber: number) {
+    this.pageService.getPage(pageNumber)
+      .subscribe(page => this.page = page);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setPagination();
+  }
+
+  private setPagination() {
+    if (window.innerWidth <= 576) {
+      this.maxSize = 3;
+    } else if (window.innerWidth <= 768) {
+      this.maxSize = 5;
+    } else {
+      this.maxSize = 10;
+    }
   }
 }
