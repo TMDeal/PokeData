@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PokemonService } from './shared/services/pokemon.service';
+import { PageService } from './shared/services/page.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -17,6 +18,7 @@ import { PokemonComponent } from './pokemon/pokemon.component';
 import { ImagifyPipe } from './shared/pipes/imagify.pipe';
 import { PokemonDetailComponent } from './pokemon/pokemon-detail/pokemon-detail.component';
 import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
+import { RangePipe } from './shared/pipes/range.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
     PokemonComponent,
     ImagifyPipe,
     PokemonDetailComponent,
-    MapToIterablePipe
+    MapToIterablePipe,
+    RangePipe
   ],
   imports: [
     NgbModule.forRoot(),
@@ -37,7 +40,10 @@ import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [PokemonService],
+  providers: [
+    PokemonService,
+    PageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
