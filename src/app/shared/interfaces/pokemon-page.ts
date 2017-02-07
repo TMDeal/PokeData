@@ -5,8 +5,8 @@ interface PageItem extends Resource {
 }
 
 export interface PokemonPage {
-  count: number;
-  next: string;
-  previous: string;
+  collectionSize?: number;
+  size?: number;
+  current?: number;
   contents: PageItem[];
 }
