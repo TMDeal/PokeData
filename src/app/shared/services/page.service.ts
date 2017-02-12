@@ -18,13 +18,12 @@ export class PageService {
 
   private maxPokemon = 721;
   private pageSize = 18;
-  private currentPage = 1;
 
   constructor(
     private http: Http
   ) { }
 
-  getPage(index = this.currentPage): Observable<PokemonPage> {
+  getPage(index = 1): Observable<PokemonPage> {
     const params: URLSearchParams = new URLSearchParams();
     const offset = (index - 1) * this.pageSize;
     params.set('limit', String(this.pageSize));
@@ -36,9 +35,9 @@ export class PageService {
 
     return this.http.get(`${this.baseUrl}pokemon`, options)
       .map(this.extractPage)
-      .do(() => this.currentPage = offset === 0 ? 1 : (offset / this.pageSize) + 1)
+      .do(() => index = offset === 0 ? 1 : (offset / this.pageSize) + 1)
       .map(page => {
-        page.current = this.currentPage;
+        page.current = index;
         page.size = this.pageSize;
         page.collectionSize = this.maxPokemon;
         return page;

@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageService } from '../shared/services/page.service';
 
@@ -14,18 +15,30 @@ export class PokemonComponent implements OnInit {
   private maxSize: number;
 
   constructor(
-    private pageService: PageService
+    private pageService: PageService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.setPagination();
-    this.pageService.getPage()
-      .subscribe(page => this.page = page);
+    this.route.queryParams
+      .subscribe(params => {
+        if (!+params['page']) {
+          this.goToPage(1);
+        } else {
+          this.pageService.getPage(+params['page'])
+            .subscribe(page => this.page = page);
+        }
+      });
   }
 
   goToPage(pageNumber: number) {
-    this.pageService.getPage(pageNumber)
-      .subscribe(page => this.page = page);
+    this.router.navigate(['pokemon'], {
+      queryParams: {
+        page: pageNumber
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
