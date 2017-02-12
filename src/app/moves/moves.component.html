@@ -1,3 +1,9 @@
-<p>
-  moves works!
-</p>
+<div class="container">
+  <table *ngIf="moves" class="table table-striped">
+    <tbody>
+      <tr *ngFor="let move of moves.results">
+        <td>{{move.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
