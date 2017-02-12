@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams, RequestOptions } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { ResourceList } from '../interfaces/pokeapi/common';
 import { Pokemon } from '../interfaces/pokeapi/pokemon';
 
 import { PokemonPage } from '../interfaces/pokemon-page';
 
-import * as _ from 'lodash';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -24,7 +21,7 @@ export class PokemonService {
     return this.http.get(`${this.baseUrl}pokemon/${id}`)
       .map((res: Response) => {
         const body: Pokemon = res.json();
-        return body || {};
+        return body;
       })
       .catch(this.handleError);
   }
