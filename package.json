@@ -4,13 +4,14 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve",
+    "start:dev": "ng serve",
     "start:prod": "ng serve -prod --aot",
     "build": "rimraf dist/ && ng build -prod --sourcemap=false --progress=false --verbose --aot",
     "deploy": "npm run build && firebase deploy",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
+    "cache": "node ./cache.js",
     "e2e": "protractor",
     "repl": "ts-node"
   },
