@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { PokemonService } from './shared/services/pokemon.service';
 import { PageService } from './shared/services/page.service';
+import { CacheService } from './shared/services/cache.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -15,7 +16,6 @@ import { StatsComponent } from './stats/stats.component';
 import { MovesComponent } from './moves/moves.component';
 import { AbilitiesComponent } from './abilities/abilities.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
-import { ImagifyPipe } from './shared/pipes/imagify.pipe';
 import { PokemonDetailComponent } from './pokemon/pokemon-detail/pokemon-detail.component';
 import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
 import { RangePipe } from './shared/pipes/range.pipe';
@@ -28,7 +28,6 @@ import { RangePipe } from './shared/pipes/range.pipe';
     MovesComponent,
     AbilitiesComponent,
     PokemonComponent,
-    ImagifyPipe,
     PokemonDetailComponent,
     MapToIterablePipe,
     RangePipe
@@ -42,7 +41,8 @@ import { RangePipe } from './shared/pipes/range.pipe';
   ],
   providers: [
     PokemonService,
-    PageService
+    PageService,
+    CacheService
   ],
   bootstrap: [AppComponent]
 })
