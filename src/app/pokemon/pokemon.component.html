@@ -7,7 +7,9 @@
         <div *ngIf="pokemon.id <= page.collectionSize" class="col-6 col-md-4 col-lg-2 pt-1 pb-1">
           <a [routerLink]="['/pokemon', pokemon.id]">
             <div class="card card-inverse">
-              <img class="img-fluid card-img-top p-md-2" src="{{pokemon.id | imagify}}" alt="{{pokemon.name}}"/>
+              <img class="img-fluid card-img-top p-md-2"
+                   src="{{pokemon.sprites['front_default']}}"
+                   alt="{{pokemon.name}}"/>
               <div style="background-color: #333; border-color: #333;" class="card-block">
                 <p class="card-text text-center">
                   <strong>{{pokemon.name}}</strong>

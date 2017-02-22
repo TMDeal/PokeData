@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageService } from '../shared/services/page.service';
 
-import { PokemonPage } from '../shared/interfaces/pokemon-page';
+import { Page } from '../shared/interfaces/pages';
+import { PokemonPageItem } from '../shared/interfaces/pokemon-page-item';
 
 @Component({
   selector: 'app-pokemon',
@@ -11,7 +12,7 @@ import { PokemonPage } from '../shared/interfaces/pokemon-page';
   styleUrls: ['./pokemon.component.scss']
 })
 export class PokemonComponent implements OnInit {
-  private page: PokemonPage;
+  private page: Page<PokemonPageItem>;
   private maxSize: number;
 
   constructor(
@@ -27,7 +28,7 @@ export class PokemonComponent implements OnInit {
         if (!+params['page']) {
           this.goToPage(1);
         } else {
-          this.pageService.getPage(+params['page'])
+          this.pageService.getPage<PokemonPageItem>('pokemon', +params['page'])
             .subscribe(page => this.page = page);
         }
       });
