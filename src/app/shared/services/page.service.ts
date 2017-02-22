@@ -4,26 +4,27 @@ import { Observable } from 'rxjs/Observable';
 
 import { ResourceList } from '../interfaces/pokeapi/common';
 
-import { PokemonPage } from '../interfaces/pokemon-page';
+import { Page } from '../interfaces/pages';
+import { PokemonPageItem } from '../interfaces/pokemon-page-item';
 
 import * as _ from 'lodash';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 
 @Injectable()
 export class PageService {
   private protocol = 'https://';
-  private baseUrl = `${this.protocol}pokeapi.co/api/v2/`;
+  private baseUrl = `${this.protocol}pokeapi.co/api/v2`;
 
-  private maxPokemon = 721;
   private pageSize = 18;
 
   constructor(
     private http: Http
   ) { }
 
-  getPage(index = 1): Observable<PokemonPage> {
+  getPage<PageItemType>(resource: string, index: number): Observable<Page<PageItemType>> {
     const params: URLSearchParams = new URLSearchParams();
     const offset = (index - 1) * this.pageSize;
     params.set('limit', String(this.pageSize));
@@ -33,32 +34,33 @@ export class PageService {
       search: params
     });
 
-    return this.http.get(`${this.baseUrl}pokemon`, options)
-      .map(this.extractPage)
+    return this.http.get(`${this.baseUrl}/${resource}`, options)
+      .map((res: Response) => {
+        const body = res.json();
+        const page: Page<PageItemType> = {
+          contents: body.results,
+          collectionSize: body.count
+        };
+        return page;
+      })
+      .switchMap(page => {
+        return this.http.get(`/assets/${resource}.json`)
+          .map((res: Response) => {
+            const body = res.json();
+            _.each(page.contents, (value, i) => {
+              value['id'] = body[value['name']]['id'];
+              value['sprites'] = body[value['name']]['sprites'];
+            });
+            return page;
+          });
+      })
       .do(() => index = offset === 0 ? 1 : (offset / this.pageSize) + 1)
       .map(page => {
         page.current = index;
         page.size = this.pageSize;
-        page.collectionSize = this.maxPokemon;
         return page;
       })
       .catch(this.handleError);
-  }
-
-  private extractPage(res: Response): PokemonPage {
-    const body = res.json();
-    const url = new URL(res.url);
-    const params: URLSearchParams = new URLSearchParams(url.search);
-
-    const page: PokemonPage = {
-      contents: body.results
-    };
-
-    _.each(page.contents, (value, index) => {
-      value['id'] = (index + 1) + +params.get('offset');
-    });
-
-    return page;
   }
 
   private handleError(error: Response | any) {
