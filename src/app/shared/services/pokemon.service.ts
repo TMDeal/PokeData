@@ -4,8 +4,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { Pokemon } from '../interfaces/pokeapi/pokemon';
 
-import { PokemonPage } from '../interfaces/pokemon-page';
-
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
