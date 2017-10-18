@@ -34,6 +34,13 @@ export default {
     ]
   },
 
+  resolve: {
+    extensions: ['.js', '.jsx'],
+    alias: {
+      components: path.resolve(APP_DIR, 'components')
+    }
+  },
+
   plugins: [
     new HtmlWebpackPlugin({
       title: 'PokeData',
