@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:dev": "webpack -d",
-    "build": "webpack -p"
+    "build:dev": "rimraf dist/ && webpack -d",
+    "build": "rimraf dist/ && webpack -p"
   },
   "repository": {
     "type": "git",
