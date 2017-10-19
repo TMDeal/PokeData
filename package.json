@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:dev": "rimraf dist/ && webpack -d",
-    "build": "rimraf dist/ && webpack -p"
+    "build:dev": "rimraf dist/ && webpack -d --progress && babel -s -D -o dist/server.js src/server.js",
+    "build": "rimraf dist/ && webpack -p --progress && babel -s -D -o dist/server.js --compact --minified src/server.js",
+    "start": "nodemon --watch src/server.js --exec babel-node -- src/server.js"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,10 @@
     "nodemon": "^1.12.1",
     "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.20.0",
+    "webpack-merge": "^4.1.0"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
