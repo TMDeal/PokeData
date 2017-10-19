@@ -32,10 +32,11 @@ module.exports = env => {
           ]
         },
         {
-          test: /\.scss$|.sass$/,
-          include: path.resolve(APP_DIR, 'styles'),
+          test: /\.scss$/,
           use: [
-            { loader: 'sass-loader' }
+            { loader: "style-loader" },
+            { loader: "css-loader" },
+            { loader: "sass-loader" }
           ]
         }
       ]
@@ -56,8 +57,7 @@ module.exports = env => {
     ]
   };
 
-  if(!env.production) {
-
+  if(env.production != true) {
     config = merge(config, {
       devtool: 'inline-source-map',
       entry: {
@@ -70,14 +70,23 @@ module.exports = env => {
       },
       plugins: [
         new webpack.DefinePlugin({
-          'process.env': {
-            'NODE_ENV': 'development'
-          }}),
+          'process.env.NODE_ENV': JSON.stringify('development')
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
       ]
     });
   }
+  else {
+    config = merge(config, {
+      plugins: [
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify('production')
+        })
+      ]
+    });
 
-  return config
+  }
+
+  return config;
 };
