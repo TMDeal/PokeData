@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:server": "babel -s -D -o dist/server.js --compact --minifies src/server.js",
+    "build:server": "babel -s -D -o dist/server.js --compact --minified src/server.js",
     "build:client": "webpack --env.production -p --progress",
     "build": "rimraf dist/ && npm run build:client && npm run build:server",
-    "start": "nodemon --watch src/server.js --exec babel-node -- src/server.js"
+    "start:dev": "NODE_ENV=development nodemon --watch src/server.js --exec babel-node -- src/server.js",
+    "start": "npm run build && NODE_ENV=production node dist/server.js"
   },
   "repository": {
     "type": "git",
