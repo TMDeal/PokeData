@@ -10,7 +10,8 @@ const APP_DIR  = path.resolve(ROOT_DIR, 'src/app');
 
 let config = {
   entry: {
-    bundle: [APP_DIR + '/index.jsx']
+    bundle: APP_DIR + '/index.jsx',
+    vendor: APP_DIR + '/vendor.js'
   },
 
   output: {
@@ -59,7 +60,10 @@ if(process.env.NODE_ENV != 'production') {
     devtool: 'inline-source-map',
     entry: {
       bundle: [
-        "webpack-hot-middleware/client",
+        "webpack-hot-middleware/client"
+      ],
+      vendor: [
+        "webpack-hot-middleware/client"
       ]
     },
     plugins: [
