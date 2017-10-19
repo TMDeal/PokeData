@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:dev": "rimraf dist/ && webpack -d --progress && babel -s -D -o dist/server.js src/server.js",
-    "build": "rimraf dist/ && webpack -p --progress && babel -s -D -o dist/server.js --compact --minified src/server.js",
+    "build:server": "babel -s -D -o dist/server.js --compact --minifies src/server.js",
+    "build:client": "webpack --env.production -p --progress",
+    "build": "rimraf dist/ && npm run build:client && npm run build:server",
     "start": "nodemon --watch src/server.js --exec babel-node -- src/server.js"
   },
   "repository": {

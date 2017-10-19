@@ -11,11 +11,17 @@ const host = 'localhost';
 const app = express();
 
 if(process.env.NODE_ENV != 'production') {
-  let compiler = webpack(webpackConfig);
+  let config = webpackConfig({
+    env: {
+      production: false
+    }
+  });
+
+  let compiler = webpack(config);
 
   app.use(webpackDevMiddleware(compiler, {
     hot: true,
-    publicPath: webpackConfig.output.publicPath,
+    publicPath: config.output.publicPath,
     noInfo: true
   }));
 
