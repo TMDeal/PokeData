@@ -1,8 +1,8 @@
 # compiled output
 /dist
 
-# dependencies
 /node_modules
+/flow-typed
 
 # misc
 npm-debug.log
