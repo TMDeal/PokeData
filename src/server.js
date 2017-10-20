@@ -11,8 +11,6 @@ const port: string = process.env.PORT || '8080';
 const host = 'localhost';
 const app = express();
 
-app.use(express.static(path.join(__dirname, '../dist')));
-
 if(process.env.NODE_ENV != 'production') {
   let config = webpackConfig({
     env: {
@@ -21,6 +19,7 @@ if(process.env.NODE_ENV != 'production') {
   });
 
   let compiler = webpack(config);
+  let indexFile = path.resolve(__dirname + 'index.html');
 
   app.use(webpackDevMiddleware(compiler, {
     hot: true,
@@ -29,7 +28,22 @@ if(process.env.NODE_ENV != 'production') {
   }));
 
   app.use(webpackHotMiddleware(compiler));
+
+  app.get('/*', (req: express$Request, res: express$Response, next: express$NextFunction): mixed => {
+      compiler.outputFileSystem.readFile(indexFile, (err, result) => {
+          if (err) {
+              return next(err);
+          }
+          res.set('content-type', 'text/html');
+          res.send(result);
+          res.end();
+      });
+  });
 }
+else {
+  app.use(express.static(path.join(__dirname, '../dist')));
+}
+
 
 app.listen('8080', () => {
   console.log(`listening on ${host}:${port}`);
