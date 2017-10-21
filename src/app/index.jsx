@@ -1,11 +1,16 @@
+// @flow
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from 'react-dom';
-
-import App from './components/app';
+import App from 'components/app';
 
 const renderTarget = document.getElementById('app');
 
-render(
-  <App/>,
-  renderTarget
-);
+if(renderTarget != null) {
+  render(
+    <Router>
+      <App/>
+    </Router>,
+    renderTarget
+  );
+}
