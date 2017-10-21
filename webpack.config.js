@@ -12,8 +12,8 @@ const APP_DIR  = path.resolve(SRC_DIR, 'app');
 module.exports = env => {
   let config = {
     entry: {
-      bundle: APP_DIR + '/index.jsx',
-      vendor: APP_DIR + '/vendor.js'
+      bundle: [APP_DIR + '/index.jsx'],
+      vendor: [APP_DIR + '/vendor.js']
     },
 
     output: {
