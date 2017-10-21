@@ -1,8 +1,19 @@
+// @flow
 import React from 'react';
+import { NavItem, NavLink } from 'reactstrap';
 
-class App extends React.Component {
+import Header from 'components/header';
+
+class App extends React.Component<{}> {
   render() {
-    return <p>Hello World!</p>;
+    return (
+      <div classname="container">
+        <Header title="PokeData" link="/">
+          <NavItem><NavLink href="#pokemon">Pokemon</NavLink></NavItem>
+          <NavItem><NavLink href="#moves">moves</NavLink></NavItem>
+        </Header>
+      </div>
+    );
   }
 }
 
