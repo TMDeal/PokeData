@@ -7,7 +7,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack.config';
 
-const port: string = process.env.PORT || '8080';
+const port = process.env.PORT || '8080';
 const host = 'localhost';
 const app = express();
 
