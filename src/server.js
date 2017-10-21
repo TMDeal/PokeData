@@ -19,7 +19,7 @@ if(process.env.NODE_ENV != 'production') {
   });
 
   let compiler = webpack(config);
-  let indexFile = path.resolve(__dirname + 'index.html');
+  let indexFile = path.resolve(compiler.outputPath, 'index.html');
 
   app.use(webpackDevMiddleware(compiler, {
     hot: true,
