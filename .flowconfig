@@ -7,4 +7,3 @@
 [lints]
 
 [options]
-module.name_mapper='^components' ->'<PROJECT_ROOT>/src/app/components'

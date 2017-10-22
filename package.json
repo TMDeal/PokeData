@@ -1,63 +1,37 @@
 {
   "name": "pokedata",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build:server": "babel -s -D -o dist/server.js --compact --minified src/server.js",
-    "build:client": "webpack --env.production -p --progress",
-    "build": "rimraf dist/ && npm run build:client && npm run build:server",
-    "start:dev": "NODE_ENV=development nodemon --watch src/server.js --exec babel-node -- src/server.js",
-    "start": "npm run build && NODE_ENV=production node dist/server.js",
-    "test": "mocha --require babel-register --require tests/setup.js --recursive tests/**/*_test.js",
-    "flow": "flow"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tmdeal/PokeData.git"
-  },
-  "author": "Trent Deal",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tmdeal/PokeData/issues"
-  },
-  "homepage": "https://github.com/tmdeal/PokeData#readme",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-syntax-flow": "^6.18.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "chai": "^4.1.2",
-    "chai-enzyme": "^1.0.0-beta.0",
-    "css-loader": "^0.28.7",
-    "enzyme": "^3.1.0",
-    "enzyme-adapter-react-16": "^1.0.2",
-    "flow-bin": "^0.57.3",
-    "html-webpack-plugin": "^2.30.1",
-    "jsdom": "^11.3.0",
-    "mocha": "^4.0.1",
-    "node-sass": "^4.5.3",
-    "nodemon": "^1.12.1",
-    "react-test-renderer": "^16.0.0",
-    "rimraf": "^2.6.2",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.0",
-    "webpack": "^3.8.1",
-    "webpack-dev-middleware": "^1.12.0",
-    "webpack-hot-middleware": "^2.20.0",
-    "webpack-merge": "^4.1.0"
-  },
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "bootstrap": "^4.0.0-beta",
-    "classnames": "^2.2.5",
-    "express": "^4.16.2",
+    "bootstrap": "^3.3.7",
     "react": "^16.0.0",
+    "react-bootstrap": "^0.31.3",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
-    "reactstrap": "^5.0.0-alpha.3",
-    "redux": "^3.7.2"
+    "react-scripts": "1.0.14"
+  },
+  "scripts": {
+    "build:css": "node-sass-chokidar src/ -o src/",
+    "watch:css": "npm run build:css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start:js": "react-scripts start",
+    "start": "npm-run-all -p watch:css start:js",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "flow": "flow"
+  },
+  "devDependencies": {
+    "core-js": "^2.5.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "eslint": "^4.9.0",
+    "eslint-plugin-react": "^7.4.0",
+    "flow-bin": "^0.57.3",
+    "jest-enzyme": "^4.0.1",
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.1.1",
+    "raf": "^3.4.0",
+    "react-router-bootstrap": "^0.24.4",
+    "react-test-renderer": "^16.0.0"
   }
 }
