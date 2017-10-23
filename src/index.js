@@ -2,9 +2,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import PokeDataTheme from './theme';
 
 // styles
 import './index.css';
@@ -18,10 +17,11 @@ import registerServiceWorker from './registerServiceWorker';
 
 const renderTarget = document.getElementById('root');
 
+
 if(renderTarget != null) {
   ReactDOM.render(
     <Router>
-      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+      <MuiThemeProvider muiTheme={PokeDataTheme}>
         <App/>
       </MuiThemeProvider>
     </Router>
