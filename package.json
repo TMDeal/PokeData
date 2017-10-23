@@ -27,7 +27,6 @@
     "eslint-plugin-react": "^7.4.0",
     "flow-bin": "^0.57.3",
     "jest-enzyme": "^4.0.1",
-    "jsx-html-class": "^1.0.3",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
     "raf": "^3.4.0",

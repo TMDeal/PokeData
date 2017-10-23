@@ -29,7 +29,7 @@ class Header extends React.Component<Props, {}> {
   render() {
     return (
       <AppBar
-        title={<span class='title'>PokeData</span>}
+        title={<span className='title'>PokeData</span>}
         onTitleTouchTap={this.handleTitleClick}
         iconElementRight={<IconButton><MoreVertIcon/></IconButton>}
       />
