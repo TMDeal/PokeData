@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import PokeDataTheme from './theme';
 
 // styles
-import './index.css';
+import './styles/index.css';
 
 // polyfills
 import 'core-js/es6/map';
