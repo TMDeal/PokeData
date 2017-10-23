@@ -2,10 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 // styles
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 
 // polyfills
@@ -20,7 +21,9 @@ const renderTarget = document.getElementById('root');
 if(renderTarget != null) {
   ReactDOM.render(
     <Router>
-      <App/>
+      <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+        <App/>
+      </MuiThemeProvider>
     </Router>
     ,renderTarget);
   registerServiceWorker();

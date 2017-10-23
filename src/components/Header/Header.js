@@ -1,32 +1,40 @@
 // @flow
 import * as React from 'react';
 import {
-  Navbar,
-  Nav,
-} from 'react-bootstrap';
+  withRouter,
+  type ContextRouter
+} from 'react-router-dom';
 
-type Props = {
-  title: string,
-  link: string,
-  children: React.Node
-};
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+
+import './Header.css';
+
+type Props = ContextRouter;
 
 class Header extends React.Component<Props, {}> {
+  handleTitleClick: () => void;
+
+  constructor(props) {
+    super(props)
+
+    this.handleTitleClick = this.handleTitleClick.bind(this);
+  }
+
+  handleTitleClick() {
+    this.props.history.push('/');
+  }
+
   render() {
-    const { title, link, children } = this.props;
     return (
-      <Navbar>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <a href={link}>{title}</a>
-          </Navbar.Brand>
-        </Navbar.Header>
-        <Nav>
-          {children}
-        </Nav>
-      </Navbar>
-    )
+      <AppBar
+        title={<span class='title'>PokeData</span>}
+        onTitleTouchTap={this.handleTitleClick}
+        iconElementRight={<IconButton><MoreVertIcon/></IconButton>}
+      />
+    );
   }
 }
 
-export default Header;
+export default withRouter(Header);
