@@ -1,0 +1,24 @@
+@import '../../../assets/theme';
+
+$accent: map-get($PokeData-theme, accent);
+$primary: map-get($PokeData-theme, primary);
+
+.PokeData-card {
+  cursor: pointer;
+  border-color: grey;
+  width: 100%;
+  height: 100%;
+  max-width: 100px;
+  max-height: 150px;
+
+  &:hover {
+    box-shadow: 1px 1px 1px 1px grey;
+  }
+
+  .PokeData-name {
+    text-align: center;
+    padding-bottom: 5px;
+    background-color: mat-color($accent);
+    color: mat-color($primary);
+  }
+}

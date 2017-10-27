@@ -1,4 +1,18 @@
-<app-header [brand]="title"></app-header>
-<main class="container-fluid">
-  <router-outlet></router-outlet>
-</main>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="push">
+    <mat-nav-list>
+      <a mat-list-item href="#pokemon">Pokemon</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-toolbar color="primary" title="PokeData">
+    <button type="button" mat-icon-button (click)="sidenav.open()">
+      <mat-icon aria-label="menu">menu</mat-icon>
+    </button>
+    <span>{{title}}</span>
+  </mat-toolbar>
+
+  <div class="PokeData-container">
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>

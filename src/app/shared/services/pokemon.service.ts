@@ -1,40 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { Pokemon } from '../models/pokeapi/pokemon/pokemon';
+import { NamedResourceList } from '../models/pokeapi/common';
 import { Observable } from 'rxjs/Observable';
+import { Cache } from '../cache';
+import { AsyncLocalStorage } from 'angular-async-local-storage';
 
-import { Pokemon } from '../interfaces/pokeapi/pokemon';
-
-import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class PokemonService {
   private protocol = 'https://';
-  private baseUrl = `${this.protocol}pokeapi.co/api/v2/`;
-  private maxPokemon = 721;
+  private baseUrl = `${this.protocol}pokeapi.co/api/v2`;
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: HttpClient,
+    private cache: AsyncLocalStorage
+  ) {}
 
-  getPokemon(id: number): Observable<Pokemon> {
-    return this.http.get(`${this.baseUrl}pokemon/${id}`)
-      .map((res: Response) => {
-        const body: Pokemon = res.json();
-        return body;
-      })
-      .catch(this.handleError);
+  getPokemon(id: string): Observable<Pokemon> {
+    return Cache<Pokemon>(this.cache, id, () => {
+      return this.http.get<Pokemon>(`${this.baseUrl}/pokemon/${id}`);
+    });
   }
 
-  private handleError(error: Response | any) {
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+  getPokemonList(limit: number, offset: number = 0): Observable<NamedResourceList> {
+    const params = new HttpParams()
+      .set('offset', `${offset}`)
+      .set('limit', `${limit}`);
+
+    return Cache<NamedResourceList>(this.cache, `pokemon?offset=${offset}&limit=${limit}`, () => {
+      return this.http.get<NamedResourceList>(`${this.baseUrl}/pokemon/`, { params });
+    });
+  }
+
+  private errorHandler(err: HttpErrorResponse) {
+    if (err.error instanceof Error) {
+      console.log('An error occurred:', err.error.message);
     } else {
-      errMsg = error.message ? error.message : error.toString();
+      console.log(`PokeApi returned code ${err.status}, body was: ${err.error}`);
     }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
   }
-
 }

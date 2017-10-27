@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+$primary: mat-palette($mat-grey, 700, 500, 900);
+$accent:  mat-palette($mat-yellow, 500, 300, 700);
+$warn:    mat-palette($mat-red, 600);
+$PokeData-theme: mat-dark-theme($primary, $accent, $warn);
+
+@include angular-material-theme($PokeData-theme);

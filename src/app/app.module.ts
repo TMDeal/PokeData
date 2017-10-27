@@ -1,49 +1,53 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http';
+import { AsyncLocalStorageModule } from 'angular-async-local-storage';
+import { LayoutModule } from '@angular/cdk/layout';
+import {
+  MatToolbarModule,
+  MatSidenavModule,
+  MatButtonModule,
+  MatIconModule,
+  MatListModule,
+  MatCardModule,
+  MatGridListModule,
+  MatProgressSpinnerModule,
+  MatPaginatorModule
+} from '@angular/material';
+
 import { AppRoutingModule } from './app-routing.module';
-
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { PokemonService } from './shared/services/pokemon.service';
-import { PageService } from './shared/services/page.service';
-import { CacheService } from './shared/services/cache.service';
-
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { StatsComponent } from './stats/stats.component';
-import { MovesComponent } from './moves/moves.component';
-import { AbilitiesComponent } from './abilities/abilities.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
-import { PokemonDetailComponent } from './pokemon/pokemon-detail/pokemon-detail.component';
-import { MapToIterablePipe } from './shared/pipes/map-to-iterable.pipe';
-import { RangePipe } from './shared/pipes/range.pipe';
+import { PokemonCardComponent } from './pokemon/pokemon-card/pokemon-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    StatsComponent,
-    MovesComponent,
-    AbilitiesComponent,
     PokemonComponent,
-    PokemonDetailComponent,
-    MapToIterablePipe,
-    RangePipe
+    PokemonCardComponent
   ],
   imports: [
-    NgbModule.forRoot(),
     BrowserModule,
-    FormsModule,
-    HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    // cache storage
+    AsyncLocalStorageModule,
+    // @angular/cdk
+    LayoutModule,
+    // @angular/material
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule,
+    MatGridListModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
-  providers: [
-    PokemonService,
-    PageService,
-    CacheService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
