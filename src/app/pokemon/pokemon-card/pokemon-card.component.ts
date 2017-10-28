@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class PokemonCardComponent implements OnInit {
   @Input() name: string;
-  private pokemon: Observable<any>;
+  pokemon: Observable<any>;
 
   constructor(private pokemonService: PokemonService) { }
 

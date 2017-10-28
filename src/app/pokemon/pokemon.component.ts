@@ -17,10 +17,10 @@ import 'rxjs/add/operator/filter';
   providers: [PokemonService]
 })
 export class PokemonComponent implements OnInit {
-  private pokemonList: Observable<NamedResourceList>;
-  private limit: number;
-  private maxPokemon: number;
-  private columns: number;
+  pokemonList: Observable<NamedResourceList>;
+  limit: number;
+  maxPokemon: number;
+  columns: number;
 
   constructor(
     private pokemonService: PokemonService,
