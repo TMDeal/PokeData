@@ -5,8 +5,7 @@ import { NamedResourceList } from '../models/pokeapi/common';
 import { Observable } from 'rxjs/Observable';
 import { Cache } from '../cache';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
-
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PokemonService {
