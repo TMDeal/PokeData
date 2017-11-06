@@ -18,8 +18,16 @@ export class PokemonService {
   ) {}
 
   getPokemon(id: string): Observable<Pokemon> {
-    return Cache<Pokemon>(this.cache, id, () => {
-      return this.http.get<Pokemon>(`${this.baseUrl}/pokemon/${id}`);
+  return this.cache.getItem<Pokemon>(id)
+    .flatMap(localData => {
+      if (localData == null) {
+          return this.http.get<Pokemon>(`${this.baseUrl}/pokemon/${id}`)
+            .do(httpData => {
+              this.cache.setItem(id, httpData).subscribe();
+              return httpData;
+            });
+      }
+      return Observable.of(localData);
     });
   }
 
@@ -28,9 +36,19 @@ export class PokemonService {
       .set('offset', `${offset}`)
       .set('limit', `${limit}`);
 
-    return Cache<NamedResourceList>(this.cache, `pokemon?offset=${offset}&limit=${limit}`, () => {
-      return this.http.get<NamedResourceList>(`${this.baseUrl}/pokemon/`, { params });
-    });
+    const key = `pokemon?offset=${offset}&limit=${limit}`;
+
+    return this.cache.getItem<NamedResourceList>(key)
+      .flatMap(localData => {
+        if (localData == null) {
+          return this.http.get<NamedResourceList>(`${this.baseUrl}/pokemon/`, { params })
+            .do(httpData => {
+              this.cache.setItem(key, httpData).subscribe();
+              return httpData;
+            });
+        }
+        return Observable.of(localData);
+      });
   }
 
   private errorHandler(err: HttpErrorResponse) {
