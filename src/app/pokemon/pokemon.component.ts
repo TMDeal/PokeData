@@ -7,8 +7,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 
 import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
+import { tap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokemon',
@@ -34,19 +33,21 @@ export class PokemonComponent implements OnInit {
     this.limit = 30;
     this.setBreakPoints();
 
-    this.activatedRoute.queryParams
-      .filter(params => {
+    this.activatedRoute.queryParams.pipe(
+      filter(params => {
         if (!params.page) {
           this.goToPage(1);
         }
         return params.page;
-      })
-      .subscribe(params => {
-        this.pokemonList = this.getPokemonList((params.page - 1) * this.limit)
-          .do(pokemonList => {
+      }),
+    ).subscribe(params => {
+        const offset = (params.page - 1) * this.limit;
+        this.pokemonList = this.getPokemonList(offset).pipe(
+          tap(pokemonList => {
             this.maxPokemon = pokemonList.count;
             return pokemonList;
-          });
+          })
+        );
       });
 
   }

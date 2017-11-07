@@ -3,9 +3,11 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Pokemon } from '../models/pokeapi/pokemon/pokemon';
 import { NamedResourceList } from '../models/pokeapi/common';
 import { Observable } from 'rxjs/Observable';
-import { Cache } from '../cache';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
-import { map } from 'rxjs/operators';
+
+import { tap, flatMap } from 'rxjs/operators';
+
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class PokemonService {
@@ -18,17 +20,19 @@ export class PokemonService {
   ) {}
 
   getPokemon(id: string): Observable<Pokemon> {
-  return this.cache.getItem<Pokemon>(id)
-    .flatMap(localData => {
-      if (localData == null) {
-          return this.http.get<Pokemon>(`${this.baseUrl}/pokemon/${id}`)
-            .do(httpData => {
-              this.cache.setItem(id, httpData).subscribe();
-              return httpData;
-            });
-      }
-      return Observable.of(localData);
-    });
+    return this.cache.getItem<Pokemon>(id).pipe(
+      flatMap(localData => {
+        if (localData == null) {
+            return this.http.get<Pokemon>(`${this.baseUrl}/pokemon/${id}`).pipe(
+              tap(httpData => {
+                this.cache.setItem(id, httpData).subscribe();
+                return httpData;
+              })
+            );
+        }
+        return Observable.of(localData);
+      })
+    );
   }
 
   getPokemonList(limit: number, offset: number = 0): Observable<NamedResourceList> {
@@ -38,24 +42,18 @@ export class PokemonService {
 
     const key = `pokemon?offset=${offset}&limit=${limit}`;
 
-    return this.cache.getItem<NamedResourceList>(key)
-      .flatMap(localData => {
+    return this.cache.getItem<NamedResourceList>(key).pipe(
+      flatMap(localData => {
         if (localData == null) {
-          return this.http.get<NamedResourceList>(`${this.baseUrl}/pokemon/`, { params })
-            .do(httpData => {
+          return this.http.get<NamedResourceList>(`${this.baseUrl}/pokemon/`, { params }).pipe(
+            tap(httpData => {
               this.cache.setItem(key, httpData).subscribe();
               return httpData;
-            });
+            })
+          );
         }
         return Observable.of(localData);
-      });
-  }
-
-  private errorHandler(err: HttpErrorResponse) {
-    if (err.error instanceof Error) {
-      console.log('An error occurred:', err.error.message);
-    } else {
-      console.log(`PokeApi returned code ${err.status}, body was: ${err.error}`);
-    }
+      })
+    );
   }
 }

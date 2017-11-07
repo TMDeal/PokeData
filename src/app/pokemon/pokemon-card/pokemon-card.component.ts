@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PokemonService } from '../../shared/services/pokemon.service';
 import { Observable } from 'rxjs/Observable';
+import { Pokemon } from '../../shared/models/pokeapi/pokemon/pokemon';
 
 @Component({
   selector: 'app-pokemon-card',
@@ -10,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class PokemonCardComponent implements OnInit {
   @Input() name: string;
-  pokemon: Observable<any>;
+  pokemon: Observable<Pokemon>;
 
   constructor(private pokemonService: PokemonService) { }
 
