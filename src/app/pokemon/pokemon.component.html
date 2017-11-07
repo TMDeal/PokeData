@@ -1,12 +1,12 @@
-<mat-grid-list [cols]="columns" rowHeight="1:1" class="PokeData-cards">
+<mat-grid-list [cols]="columns" rowHeight="1:1">
   <mat-grid-tile *ngFor="let pokemon of (pokemonList | async)?.results">
     <app-pokemon-card [name]="pokemon.name"></app-pokemon-card>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-paginator
-  class="PokeData-paginator"
   (page)="goToPage($event)"
   [length]="maxPokemon"
+  [pageIndex]="activePage"
   [pageSize]="limit"
   >
 </mat-paginator>

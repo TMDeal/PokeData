@@ -7,7 +7,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 
 import { Observable } from 'rxjs/Observable';
 
-import { tap, filter } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokemon',
@@ -20,6 +20,7 @@ export class PokemonComponent implements OnInit {
   limit: number;
   maxPokemon: number;
   columns: number;
+  activePage: number;
 
   constructor(
     private pokemonService: PokemonService,
@@ -33,15 +34,18 @@ export class PokemonComponent implements OnInit {
     this.limit = 30;
     this.setBreakPoints();
 
-    this.activatedRoute.queryParams.pipe(
-      filter(params => {
+    this.activatedRoute.queryParams
+      .subscribe(params => {
         if (!params.page) {
-          this.goToPage(1);
+          this.activePage = 0;
+          this.goToPage({
+            length: this.maxPokemon,
+            pageIndex: this.activePage,
+            pageSize: this.limit
+          });
         }
-        return params.page;
-      }),
-    ).subscribe(params => {
-        const offset = (params.page - 1) * this.limit;
+        this.activePage = params.page - 1;
+        const offset = (this.activePage) * this.limit;
         this.pokemonList = this.getPokemonList(offset).pipe(
           tap(pokemonList => {
             this.maxPokemon = pokemonList.count;
@@ -56,14 +60,8 @@ export class PokemonComponent implements OnInit {
     return this.pokemonService.getPokemonList(this.limit, offset);
   }
 
-  goToPage(event: PageEvent | number) {
-    let pageNumber;
-
-    if (typeof event === 'number') {
-      pageNumber = event;
-    } else {
-      pageNumber = event.pageIndex + 1;
-    }
+  goToPage(event: PageEvent) {
+    const pageNumber = event.pageIndex + 1;
 
     this.router.navigate(['/pokemon'], {
       queryParams: {
