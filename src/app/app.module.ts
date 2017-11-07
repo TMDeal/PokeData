@@ -16,6 +16,7 @@ import {
   MatPaginatorModule
 } from '@angular/material';
 
+import { CacheService } from './shared/services/cache.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
@@ -47,7 +48,7 @@ import { PokemonCardComponent } from './pokemon/pokemon-card/pokemon-card.compon
     MatProgressSpinnerModule,
     MatPaginatorModule
   ],
-  providers: [],
+  providers: [CacheService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
