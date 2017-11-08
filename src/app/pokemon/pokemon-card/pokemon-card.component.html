@@ -1,7 +1,8 @@
-<mat-card class="PokeData-card" *ngIf="pokemon | async; else loading; let pokemon">
-  <img mat-card-image src={{pokemon.sprites.front_default}}>
-  <mat-card-footer class="PokeData-name">{{name}}</mat-card-footer>
-</mat-card>
+<div *ngIf="pokemon | async; else loading; let pokemon">
+  <mat-card [routerLink]="['/pokemon', pokemon.name]" class="PokeData-card"> <img mat-card-image src={{pokemon.sprites.front_default}}>
+    <mat-card-footer class="PokeData-name">{{name}}</mat-card-footer>
+  </mat-card>
+</div>
 
 <ng-template #loading>
   <mat-spinner color="accent" diameter="50"></mat-spinner>

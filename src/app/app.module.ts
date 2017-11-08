@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 import { LayoutModule } from '@angular/cdk/layout';
 import {
@@ -21,12 +21,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PokemonComponent } from './pokemon/pokemon.component';
 import { PokemonCardComponent } from './pokemon/pokemon-card/pokemon-card.component';
+import { PokemonDetailComponent } from './pokemon/pokemon-detail/pokemon-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonComponent,
-    PokemonCardComponent
+    PokemonCardComponent,
+    PokemonDetailComponent
   ],
   imports: [
     BrowserModule,
