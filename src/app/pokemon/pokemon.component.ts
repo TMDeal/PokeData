@@ -33,37 +33,34 @@ export class PokemonComponent implements OnInit {
     this.columns = 6;
     this.limit = 30;
     this.setBreakPoints();
-
-    this.activatedRoute.queryParams
-      .subscribe(params => {
-        if (!params.page) {
-          this.activePage = 0;
-          this.goToPage({
-            length: this.maxPokemon,
-            pageIndex: this.activePage,
-            pageSize: this.limit
-          });
-        }
-        this.activePage = params.page - 1;
-        const offset = (this.activePage) * this.limit;
-        this.pokemonList = this.getPokemonList(offset).pipe(
-          tap(pokemonList => {
-            this.maxPokemon = pokemonList.count;
-            return pokemonList;
-          })
-        );
-      });
-
+    this.getCurrentPage();
+    this.goToPage(this.activePage);
   }
 
   getPokemonList(offset: number = 0) {
     return this.pokemonService.getPokemonList(this.limit, offset);
   }
 
-  goToPage(event: PageEvent) {
-    const pageNumber = event.pageIndex + 1;
+  getCurrentPage() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (!params['page']) {
+        this.activePage = 1;
+      } else {
+        this.activePage = +params['page'] - 1;
+      }
 
-    this.router.navigate(['/pokemon'], {
+      const offset = (this.activePage) * this.limit;
+      this.pokemonList = this.getPokemonList(offset).pipe(
+        tap(pokemonList => {
+          this.maxPokemon = pokemonList.count;
+          return pokemonList;
+        })
+      );
+    });
+  }
+
+  goToPage(pageNumber: number) {
+    this.router.navigate([], {
       queryParams: {
         page: pageNumber
       }

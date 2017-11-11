@@ -4,7 +4,7 @@
   </mat-grid-tile>
 </mat-grid-list>
 <mat-paginator
-  (page)="goToPage($event)"
+  (page)="goToPage($event.pageIndex + 1)"
   [length]="maxPokemon"
   [pageIndex]="activePage"
   [pageSize]="limit"
