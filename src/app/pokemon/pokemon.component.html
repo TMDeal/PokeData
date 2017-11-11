@@ -6,7 +6,7 @@
 <mat-paginator
   (page)="goToPage($event.pageIndex + 1)"
   [length]="maxPokemon"
-  [pageIndex]="activePage"
+  [pageIndex]="activePage - 1"
   [pageSize]="limit"
   >
 </mat-paginator>

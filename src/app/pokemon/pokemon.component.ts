@@ -43,13 +43,14 @@ export class PokemonComponent implements OnInit {
 
   getCurrentPage() {
     this.activatedRoute.queryParams.subscribe(params => {
+
       if (!params['page']) {
         this.activePage = 1;
       } else {
-        this.activePage = +params['page'] - 1;
+        this.activePage = +params['page'];
       }
 
-      const offset = (this.activePage) * this.limit;
+      const offset = (this.activePage - 1) * this.limit;
       this.pokemonList = this.getPokemonList(offset).pipe(
         tap(pokemonList => {
           this.maxPokemon = pokemonList.count;
