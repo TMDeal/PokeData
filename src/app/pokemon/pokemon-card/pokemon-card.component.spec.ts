@@ -30,7 +30,7 @@ describe('PokemonCardComponent', () => {
       providers: [
         PokemonService,
         CacheService
-      ]
+      ],
       declarations: [ PokemonCardComponent ]
     })
     .compileComponents();
